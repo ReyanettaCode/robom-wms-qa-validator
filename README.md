@@ -1,4 +1,4 @@
-# wms-qa-validator# RobOm WMS & Robotics QA Validation Framework
+# WMS & Robotics QA Validation Framework
 
 Automated testing framework designed to validate Warehouse Management System (WMS) backend APIs, data tracking consistency, and autonomous robot task execution loops.
 
