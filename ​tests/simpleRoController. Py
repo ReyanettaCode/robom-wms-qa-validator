@@ -1,0 +1,34 @@
+import pytest
+from unittest.mock import Mock
+
+# Simple simulation of a Robot Controller Class
+class RobotController:
+    def __init__(self, hardware_interface):
+        self.hardware = hardware_interface
+        self.status = "IDLE"
+
+    def execute_movement_sequence(self, commands):
+        
+        for command in commands:
+            if not self.hardware.send_command(command):
+                self.status = f"ERROR_AT_{command}"
+                return False
+        self.status = "SUCCESS"
+        return True
+
+ 
+def test_robot_stops_and_reports_error_on_failed_command_line():
+    
+    mock_hardware = Mock()
+    
+    mock_hardware.send_command.side_effect = [True, True, False]
+    
+    controller = RobotController(mock_hardware)
+    commands_list = ["MOVE_FORWARD", "ROTATE_90", "PICK_PALLET"]
+
+    
+    result = controller.execute_movement_sequence(commands_list)
+
+    
+    assert result is False
+    assert controller.status == "ERROR_AT_PICK_PALLET"
